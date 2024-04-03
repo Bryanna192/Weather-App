@@ -43,8 +43,8 @@ function displayWeather(data) {
         weatherInfoDiv.innerHTML = `<p>${data.message}</p>`;
     } else {
         const cityName = data.name;
-        const temperatureCelsius = Math.round(data.main.temp - 273.15); // Temperature in Celsius
-        const temperatureFahrenheit = Math.round((temperatureCelsius * 9/5) + 32); // Convert to Fahrenheit
+        const temperatureCelsius = Math.round(data.main.temp - 273.15);
+        const temperatureFahrenheit = Math.round((temperatureCelsius * 9/5) + 32);
         const description = data.weather[0].description;
         const iconCode = data.weather[0].icon;
         const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
@@ -54,7 +54,6 @@ function displayWeather(data) {
             <p>${description}</p>
         `;
         tempDivInfo.innerHTML = temperatureHTML;
-        weatherInfoDiv.innerHTML = temperatureHTML;
         weatherIcon.src = iconUrl;
         weatherIcon.alt = description;
 
@@ -64,13 +63,15 @@ function displayWeather(data) {
 
 function displayHourlyForecast(hourlyData) {
     const hourlyForecastDiv = document.getElementById('hourly-forecast');
+    hourlyForecastDiv.innerHTML = ''; // Clear existing content
+
     const next24Hours = hourlyData.slice(0, 8);
 
     next24Hours.forEach(item => {
         const dateTime = new Date(item.dt * 1000);
         const hour = dateTime.getHours();
-        const temperatureCelsius = Math.round(item.main.temp - 273.15); // Temperature in Celsius
-        const temperatureFahrenheit = Math.round((temperatureCelsius * 9/5) + 32); // Convert to Fahrenheit
+        const temperatureCelsius = Math.round(item.main.temp - 273.15);
+        const temperatureFahrenheit = Math.round((temperatureCelsius * 9/5) + 32);
         const iconCode = item.weather[0].icon;
         const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
 
@@ -84,7 +85,6 @@ function displayHourlyForecast(hourlyData) {
         hourlyForecastDiv.innerHTML += hourlyItemHtml;
     });
 }
-
 
 function showImage() {
     const weatherIcon = document.getElementById('weather-icon');
